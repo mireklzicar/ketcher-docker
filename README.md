@@ -1,6 +1,9 @@
-# Ketcher Docker - Chemical Structure Editor
+# Ketcher Docker - Chemical Structure Editor Docker Deployment
 
-A production-ready Vite-based application that embeds the Ketcher chemical structure editor with full iframe communication support.
+![Website Deploy](https://deploy-badge.vercel.app/?url=http%3A%2F%2Fketcher.mireklzicar.com&logo=vercel&name=ketcher.mireklzicar.com) [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](./LICENSE)
+
+
+A production-ready Vite-based application that embeds the Ketcher chemical structure editor with full iframe communication support. Demo at [ketcher.mireklzicar.com](ketcher.mireklzicar.com)
 
 ## Features
 
@@ -10,6 +13,20 @@ A production-ready Vite-based application that embeds the Ketcher chemical struc
 - 🏗️ Standalone mode (no backend required)
 - 📱 Responsive design
 - 🚀 Production-ready build
+
+
+## 🧾 Attribution & Licensing
+
+This project embeds and redistributes [**Ketcher**](https://lifescience.opensource.epam.com/ketcher/) — an open-source, web-based chemical structure editor developed and maintained by [**EPAM Life Sciences**](https://lifescience.epam.com/).
+
+* **GitHub Repository**: [github.com/epam/ketcher](https://github.com/epam/ketcher)
+* **Documentation & Website**: [lifescience.opensource.epam.com/ketcher](https://lifescience.opensource.epam.com/ketcher/)
+
+* **License**: [Apache License 2.0](./LICENSE)
+* **Acknowledgments and attributions**: [NOTICE](./NOTICE)
+
+
+> This project is not affiliated with or endorsed by EPAM Systems. It is an independent deployment and integration of Ketcher (version 3.2.0) with a custom iframe communication layer and self-hosted enhancements.
 
 ## Quick Start
 
@@ -206,13 +223,35 @@ The Docker setup includes:
 
 ### Vercel Deployment
 
-For Vercel deployment, the Docker setup ensures compatibility:
+**🚀 Live Demo**: [https://ketcher-docker-e78uoiplu-miroslav-lzicars-projects.vercel.app](https://ketcher-docker-e78uoiplu-miroslav-lzicars-projects.vercel.app)
+
+The application has been successfully deployed to Vercel with optimized configuration for iframe embedding and CORS support.
+
+#### Deployment Configuration
+
+The project includes a [`vercel.json`](vercel.json) configuration file with:
+
+- **Framework Detection**: Automatically detected as Vite
+- **Build Command**: `pnpm build`
+- **Output Directory**: `dist`
+- **CORS Headers**: Configured for cross-origin iframe embedding
+- **SPA Routing**: Proper handling of React Router routes
+
+#### Deploy Your Own
 
 ```bash
-# The built Docker image can be deployed to Vercel
-# or you can deploy the static build directly
+# Install Vercel CLI (if not already installed)
+npm i -g vercel
+
+# Deploy to production
+vercel --prod
+```
+
+Or deploy the static build directly:
+
+```bash
 pnpm build
-# Upload dist/ folder to Vercel
+# Upload dist/ folder to Vercel dashboard
 ```
 
 ### Static Hosting
@@ -233,6 +272,8 @@ src/
 ├── utils.ts         # Ketcher service provider setup
 ├── main.tsx         # Application entry point
 ├── index.css        # Global styles
+├── types
+│   └── ketcher-standalone.d.ts # Ketcher type definitions
 └── vite-env.d.ts    # Vite type definitions
 ```
 
@@ -241,7 +282,3 @@ src/
 - **App.tsx**: Contains all iframe communication logic and Ketcher initialization
 - **utils.ts**: Handles Ketcher standalone service provider setup
 - **vite.config.ts**: Build configuration with CORS headers
-
-## License
-
-This project uses Ketcher, which is licensed under the Apache License 2.0.
