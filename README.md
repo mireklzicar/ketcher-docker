@@ -35,6 +35,16 @@ pnpm build
 pnpm preview
 ```
 
+### Docker (Recommended for Production)
+
+```bash
+# Build and run with Docker
+docker build -t ketcher-docker-app .
+docker run -d -p 8080:80 --name ketcher-app ketcher-docker-app
+
+# Access at http://localhost:8080
+```
+
 ## Iframe Integration
 
 ### Basic Usage
@@ -155,15 +165,63 @@ The application is designed to be deployed as a static site. It includes:
 
 ### Docker Deployment
 
-```dockerfile
-FROM nginx:alpine
-COPY dist/ /usr/share/nginx/html/
-EXPOSE 80
+This project includes a complete Docker setup for production deployment with proper iframe support and CORS configuration.
+
+#### Build and Run
+
+```bash
+# Build the Docker image
+docker build -t ketcher-docker-app .
+
+# Run the container
+docker run -d -p 8080:80 --name ketcher-app ketcher-docker-app
+
+# Access the application
+# http://localhost:8080
+```
+
+#### Docker Configuration
+
+The Docker setup includes:
+
+- **Multi-stage build**: Uses Node.js Alpine for building and Nginx Alpine for serving
+- **Optimized nginx configuration**: Custom [`nginx.conf`](nginx.conf) with SPA routing support
+- **Iframe-friendly**: Removes X-Frame-Options to allow cross-origin iframe embedding
+- **CORS enabled**: Configured for cross-origin access
+- **Asset optimization**: Gzip compression and caching for static files
+- **Proper permissions**: Handles file ownership and permissions correctly
+
+#### Key Docker Files
+
+- [`Dockerfile`](Dockerfile) - Multi-stage build configuration
+- [`nginx.conf`](nginx.conf) - Production nginx configuration with iframe support
+- [`.dockerignore`](dockerignore) - Excludes development files and handles macOS compatibility
+
+#### Production Features
+
+- **Iframe Support**: Full cross-origin iframe embedding capability
+- **SPA Routing**: Proper handling of React Router routes
+- **Security Headers**: Optimized security headers (except X-Frame-Options for iframe support)
+- **Performance**: Gzip compression, asset caching, and optimized delivery
+
+### Vercel Deployment
+
+For Vercel deployment, the Docker setup ensures compatibility:
+
+```bash
+# The built Docker image can be deployed to Vercel
+# or you can deploy the static build directly
+pnpm build
+# Upload dist/ folder to Vercel
 ```
 
 ### Static Hosting
 
-The built application in `dist/` can be deployed to any static hosting service (Vercel, Netlify, AWS S3, etc.).
+The built application in `dist/` can be deployed to any static hosting service (Vercel, Netlify, AWS S3, etc.). For iframe embedding, ensure your hosting platform allows:
+
+- Custom headers configuration
+- Cross-origin resource sharing (CORS)
+- Removal of X-Frame-Options header
 
 ## Development
 

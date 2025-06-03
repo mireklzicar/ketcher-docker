@@ -28,5 +28,27 @@ export default defineConfig({
     'process.env': {},
     'process.env.PUBLIC_URL': '""',
     'global': 'globalThis',
+  },
+  build: {
+    commonjsOptions: {
+      include: [/ketcher/, /node_modules/],
+      transformMixedEsModules: true,
+    },
+    rollupOptions: {
+      external: [],
+      output: {
+        globals: {
+          'global': 'globalThis',
+        },
+      },
+    },
+  },
+  optimizeDeps: {
+    include: ['ketcher-core', 'ketcher-react', 'ketcher-standalone'],
+    esbuildOptions: {
+      define: {
+        global: 'globalThis',
+      },
+    },
   }
 })
