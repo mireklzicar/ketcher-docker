@@ -7,9 +7,14 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "ketcher-core": "^3.2.0",
+    "ketcher-react": "^3.2.0",
+    "ketcher-standalone": "^3.2.0",
+    "normalize.css": "^8.0.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
