@@ -5,6 +5,8 @@
 
 A production-ready Vite-based application that embeds the Ketcher chemical structure editor with full iframe communication support. Demo at [ketcher.mireklzicar.com](ketcher.mireklzicar.com)
 
+![](public/ketcher.png)
+
 ## Features
 
 - ⚛️ React 19 + TypeScript + Vite
@@ -13,6 +15,7 @@ A production-ready Vite-based application that embeds the Ketcher chemical struc
 - 🏗️ Standalone mode (no backend required)
 - 📱 Responsive design
 - 🚀 Production-ready build
+- 📱 Fixed touch screen keyboard trigger on mobile devices
 
 
 ## 🧾 Attribution & Licensing
@@ -27,6 +30,34 @@ This project embeds and redistributes [**Ketcher**](https://lifescience.opensour
 
 
 > This project is not affiliated with or endorsed by EPAM Systems. It is an independent deployment and integration of Ketcher (version 3.2.0) with a custom iframe communication layer and self-hosted enhancements.
+
+## Citation
+
+If you use this project in your research or work, please cite both this repository and the original Ketcher project:
+
+### This Repository
+
+```bibtex
+@misc{ketcher-docker,
+  title        = {Ketcher Docker - Chemical Structure Editor Docker Deployment},
+  author       = {Miroslav Lžičař},
+  year         = {2025},
+  howpublished = {\url{https://github.com/miroslav-lzicar/ketcher-docker}},
+  note         = {Accessed: 2025-06-07}
+}
+```
+
+### Original Ketcher Project
+
+```bibtex
+@misc{ketcher,
+  title        = {Ketcher: Web-based Chemical Structure Editor},
+  author       = {{EPAM Systems}},
+  year         = {2025},
+  howpublished = {\url{https://github.com/epam/ketcher}},
+  note         = {Accessed: 2025-06-07}
+}
+```
 
 ## Quick Start
 
