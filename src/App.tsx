@@ -190,7 +190,15 @@ const App = () => {
   }, [ketcherInstance]);
 
   if (!structServiceProvider) {
-    return <div>Loading...</div>;
+    return (
+      <div className="loading-screen">
+        <div className="loading-dots">
+          <div className="dot"></div>
+          <div className="dot"></div>
+          <div className="dot"></div>
+        </div>
+      </div>
+    );
   }
 
   return (
