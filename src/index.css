@@ -88,3 +88,99 @@ body {
         opacity: 1;
     }
 }
+
+/* Touch screen keyboard prevention for Ketcher canvas */
+@media (hover: none) and (pointer: coarse) {
+    /* This specifically targets touch screen devices */
+    
+    /* Prevent touch keyboard from appearing on Ketcher input elements */
+    .cliparea,
+    .ketcher-canvas input,
+    .ketcher-canvas textarea,
+    .ketcher-editor input,
+    .ketcher-editor textarea,
+    input[data-testid*="cliparea"],
+    textarea[data-testid*="cliparea"],
+    input[readonly],
+    textarea[readonly] {
+        inputmode: none !important;
+        -webkit-user-select: none !important;
+        -moz-user-select: none !important;
+        -ms-user-select: none !important;
+        user-select: none !important;
+        pointer-events: none !important;
+        opacity: 0 !important;
+        position: absolute !important;
+        left: -9999px !important;
+        top: -9999px !important;
+        -webkit-appearance: none !important;
+        -moz-appearance: none !important;
+        appearance: none !important;
+    }
+    
+    /* Prevent touch interactions that might trigger focus */
+    .ketcher-canvas,
+    .ketcher-editor {
+        -webkit-touch-callout: none !important;
+        -webkit-user-select: none !important;
+        -khtml-user-select: none !important;
+        -moz-user-select: none !important;
+        -ms-user-select: none !important;
+        user-select: none !important;
+        touch-action: manipulation !important;
+    }
+    
+    /* Prevent text cursor on canvas areas */
+    .ketcher-canvas *,
+    .ketcher-editor * {
+        cursor: default !important;
+    }
+    
+    /* Override any focus styles that might trigger keyboard */
+    .ketcher-canvas *:focus,
+    .ketcher-editor *:focus,
+    .cliparea:focus,
+    input:focus,
+    textarea:focus {
+        outline: none !important;
+        -webkit-appearance: none !important;
+        -moz-appearance: none !important;
+        appearance: none !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+    
+    /* Prevent zoom on double-tap for canvas area */
+    .ketcher-canvas,
+    .ketcher-editor {
+        touch-action: manipulation !important;
+    }
+    
+    /* Ensure all hidden inputs stay hidden and unfocusable */
+    input[type="text"]:not([data-visible="true"]),
+    textarea:not([data-visible="true"]),
+    input[style*="position: absolute"],
+    input[style*="left: -9999"],
+    input[style*="opacity: 0"] {
+        position: absolute !important;
+        left: -9999px !important;
+        top: -9999px !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        -webkit-user-select: none !important;
+        user-select: none !important;
+        inputmode: none !important;
+        tabindex: -1 !important;
+    }
+}
+
+/* Fallback for any touch-capable device */
+@supports (pointer: coarse) {
+    .ketcher-canvas input,
+    .ketcher-canvas textarea,
+    .ketcher-editor input,
+    .ketcher-editor textarea {
+        inputmode: none !important;
+        touch-action: manipulation !important;
+    }
+}

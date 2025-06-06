@@ -33,6 +33,102 @@ const App = () => {
     getStructServiceProvider().then(setStructServiceProvider);
   }, []);
 
+  // Prevent touch screen keyboard triggers on canvas interactions
+  useEffect(() => {
+    // Detect touch screen capability
+    const hasTouchScreen = 'ontouchstart' in window ||
+                          navigator.maxTouchPoints > 0 ||
+                          ((navigator as Navigator & { msMaxTouchPoints?: number }).msMaxTouchPoints || 0) > 0;
+
+    if (!hasTouchScreen) return;
+
+    const preventTouchKeyboard = (event: Event) => {
+      const target = event.target as HTMLElement;
+      
+      // Target any input or textarea elements that could trigger keyboard
+      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+        // Check if it's a Ketcher-related element (clipboard, canvas inputs, etc.)
+        const isKetcherInput = target.classList.contains('cliparea') ||
+                              target.closest('.ketcher-canvas') ||
+                              target.closest('.ketcher-editor') ||
+                              target.closest('[class*="ketcher"]') ||
+                              target.hasAttribute('readonly') ||
+                              target.style.position === 'absolute' ||
+                              target.style.left?.includes('-9999') ||
+                              target.style.opacity === '0';
+
+        if (isKetcherInput) {
+          // Completely prevent focus and input for drawing canvas
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          
+          // Immediately blur if somehow focused
+          (target as HTMLInputElement | HTMLTextAreaElement).blur();
+          
+          // Disable the element temporarily for touch interaction
+          const originalTabIndex = target.tabIndex;
+          target.tabIndex = -1;
+          target.setAttribute('readonly', 'true');
+          target.setAttribute('inputmode', 'none');
+          
+          // Reset after a brief moment
+          setTimeout(() => {
+            target.tabIndex = originalTabIndex;
+          }, 100);
+          
+          return false;
+        }
+      }
+    };
+
+    // Listen for all interaction events that could trigger keyboard
+    const events = ['touchstart', 'touchend', 'click', 'focus', 'focusin', 'mousedown'];
+    
+    events.forEach(eventType => {
+      document.addEventListener(eventType, preventTouchKeyboard, {
+        capture: true,
+        passive: false
+      });
+    });
+
+    // Also monitor for dynamically added input elements
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node.nodeType === 1) { // Element node
+            const element = node as HTMLElement;
+            // Check for new input/textarea elements
+            const inputs = element.tagName === 'INPUT' || element.tagName === 'TEXTAREA'
+              ? [element]
+              : element.querySelectorAll('input, textarea');
+              
+            inputs.forEach((input) => {
+              const inputElement = input as HTMLInputElement | HTMLTextAreaElement;
+              if (inputElement.closest('.ketcher-canvas') || inputElement.closest('.ketcher-editor')) {
+                inputElement.setAttribute('inputmode', 'none');
+                inputElement.setAttribute('readonly', 'true');
+                inputElement.tabIndex = -1;
+              }
+            });
+          }
+        });
+      });
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+
+    // Cleanup
+    return () => {
+      events.forEach(eventType => {
+        document.removeEventListener(eventType, preventTouchKeyboard, true);
+      });
+      observer.disconnect();
+    };
+  }, []);
+
   // Set up message handling outside of onInit to avoid timing issues
   useEffect(() => {
     if (!ketcherInstance) return;
