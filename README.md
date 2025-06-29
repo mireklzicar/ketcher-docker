@@ -3,7 +3,7 @@
 ![Website Deploy](https://deploy-badge.vercel.app/?url=http%3A%2F%2Fketcher.mireklzicar.com&logo=vercel&name=ketcher.mireklzicar.com) [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](./LICENSE)
 
 
-A production-ready Vite-based application that embeds the Ketcher chemical structure editor with full iframe communication support. Demo at [ketcher.mireklzicar.com](ketcher.mireklzicar.com)
+A production-ready Vite-based application that embeds the Ketcher chemical structure editor with full iframe communication support. Demo at [ketcher.mireklzicar.com](https://ketcher.mireklzicar.com)
 
 ![](public/ketcher.png)
 
